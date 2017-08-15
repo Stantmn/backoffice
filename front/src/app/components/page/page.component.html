@@ -1,0 +1,73 @@
+<app-page-header [heading]="'Pages'" [icon]="'fa-table'"></app-page-header>
+<div class="row">
+    <div class="col col-xl-12 col-lg-12">
+        <div class="card mb-3">
+            <div class="card-header">{{page.id ? 'Edit' : 'Add'}} Pages</div>
+            <form role="form" #pageForm="ngForm">
+                <fieldset class="form-group">
+                    <label>Title</label>
+                    <input class="form-control" [(ngModel)]="page.title" name="title" placeholder="Enter a title" required>
+                </fieldset>
+
+                <fieldset class="form-group">
+                    <label>Text</label>
+                    <app-tinymce [(ngModel)]="page.text" name="text" required></app-tinymce>
+                </fieldset>
+
+                <fieldset class="form-group">
+                    <label>Files</label>
+                    <div class="form-group align-middle">
+                        <div class="col-md-12">
+                            <input class="form-control" type="file" name="files[]" #fileInput
+                                   (change)="fileChangeEvent($event);fileInput.value = ''"
+                                   placeholder="Upload file..." accept="image/x-png,image/gif,image/jpeg" multiple />
+                            <br>
+                            <li *ngFor="let file of page.files">
+                                {{file}} <i style="cursor: pointer;" (click)="deleteFile(file)" class="fa fa-remove"></i>
+                            </li>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="form-group align-middle">
+                    <div class="col-md-8">
+                        <button class="btn btn-danger" (click)="pageCancel()" >Cancel</button>
+                        <button class="btn btn-success" (click)="pageSave()" [disabled]="!pageForm.form.valid">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col col-xl-12 col-lg-12">
+        <div class="card mb-3">
+            <div class="card-header">Pages</div>
+            <div class="card-block table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th (click)="sortField(1)" style="cursor: pointer;">#</th>
+                        <th (click)="sortField(2)" style="cursor: pointer;" width="80%">Title</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let page of pageList; let i = index">
+                        <td>{{page.id}}</td>
+                        <td class="central">{{page.title}}</td>
+                        <td>
+                            <button class="btn btn-warning" (click)="editPage(page.id)">Edit</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger" (click)="deletePage(page.id)">Delete</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

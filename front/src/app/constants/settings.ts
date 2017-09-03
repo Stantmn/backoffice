@@ -1,22 +1,14 @@
 export class Settings {
     public static API_ENDPOINT: string = 'http://localhost:4200/api';
-    public static PAYMENT_FREQUENCY: {} = [
+    public static CATEGORIES: {} = [
         {value: 0, name: "Undefined"},
-        {value: 1, name: "Monthly"},
-        {value: 2, name: "Twice a year"},
-        {value: 3, name: "Yearly"}
+        {value: 1, name: "Toys"},
+        {value: 2, name: "Books"},
+        {value: 3, name: "Games"}
     ];
-    public static PAYMENT_METHOD: {} = [
-        {value: 0, name: "Undefined"},
-        {value: 1, name: "Credit Card"},
-        {value: 2, name: "Pay Check"},
-        {value: 3, name: "Cash"}
-    ];
-    public static OWNER_STATUS: {} = [
-        {value: 0, name: "Inactive"},
-        {value: 1, name: "Active"},
-        {value: 2, name: "Suspended"},
-        {value: 3, name: "Deleted"}
+    public static PRODUCT_STATUS: {} = [
+        {value: 0, name: "Show"},
+        {value: 1, name: "Hide"},
     ];
     public static USER_ROLES: {} = [
         {value: 0, name: "Undefined"},

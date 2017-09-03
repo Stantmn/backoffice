@@ -1,0 +1,113 @@
+<app-page-header [heading]="'Products'" [icon]="'fa-table'"></app-page-header>
+<div class="row" *ngIf="showFormFlag">
+    <div class="col col-xl-12 col-lg-12">
+        <form #productForm="ngForm">
+            <div class="card mb-3">
+                <div class="card-header">
+                    {{product.id ? 'Edit' : 'Add'}} Products
+                </div>
+                <div class="col-md-12">
+
+                    <fieldset class="form-group align-middle">
+                        <label>Category</label>
+                        <select class="form-control" [(ngModel)]="product.category" name="status">
+                            <option *ngFor="let item of categoryList;" [ngValue]="item.value">{{ item.name }}</option>
+                        </select>
+                    </fieldset>
+
+                    <fieldset class="form-group align-middle">
+                        <label>Name</label>
+                        <input class="form-control" [(ngModel)]="product.name" name="name" id="name"
+                               placeholder="Enter a Name" minlength="2" required>
+                    </fieldset>
+
+                    <fieldset class="form-group">
+                        <label>Description</label>
+                        <app-tinymce [(ngModel)]="product.description" name="description" required></app-tinymce>
+                    </fieldset>
+
+                    <fieldset class="form-group align-middle">
+                        <label>Cost</label>
+                        <input class="form-control" [(ngModel)]="product.cost" name="cost" id="cost"
+                               placeholder="Enter a Name" minlength="2" required>
+                    </fieldset>
+
+                    <fieldset class="form-group align-middle">
+                        <label>Status</label>
+                        <select class="form-control" [(ngModel)]="product.status" name="status">
+                            <option *ngFor="let item of statusList;" [ngValue]="item.value">{{ item.name }}</option>
+                        </select>
+                    </fieldset>
+
+                    <fieldset class="form-group">
+                        <label>Files</label>
+                        <div class="form-group align-middle">
+                            <div class="col-md-12">
+                                <input class="form-control" type="file" name="files[]" #fileInput
+                                       (change)="fileChangeEvent($event);fileInput.value = ''"
+                                       placeholder="Upload file..." accept="image/x-png,image/gif,image/jpeg" multiple />
+                                <br>
+                                <li *ngFor="let file of product.files">
+                                     {{file}} <i style="cursor: pointer;" (click)="deleteFile(file)" class="fa fa-remove"></i>
+                                </li>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <div class="form-group align-middle">
+                        <div class="col-md-8">
+                            <button class="btn btn-danger" (click)="productCancel()">Cancel</button>
+                            <button class="btn btn-success" (click)="productSave()" [disabled]="!productForm.form.valid">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col col-xl-12 col-lg-12">
+        <div class="card mb-3">
+            <div class="card-header">Products</div>
+            <div class="card-block table-responsive">
+                <button class="btn btn-success" (click)="setShowForm(!showFormFlag)">Add New</button>
+                <br><br>
+                <input class="form-control" [(ngModel)]="tableParams.search" name="search"
+                       placeholder="Enter a Name" (keyup)="searchFilter()">
+                <br>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th (click)="sortField(1)" style="cursor: pointer;">#</th>
+                        <th (click)="sortField(2)" style="cursor: pointer;" width="60%">Name</th>
+                        <th (click)="sortField(4)" style="cursor: pointer;" width="20%">Status</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let product of productList; let i = index;">
+                        <td>{{product.id}}</td>
+                        <td class="central">
+                            <a href="/vehicle/{{product.id}}"> {{product.firstName}} {{product.lastName}}</a>
+                        </td>
+                        <td class="central">{{statusList[product.status].name}}</td>
+                        <td>
+                            <button class="btn btn-warning" (click)="editProduct(product.id)">Edit</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger" (click)="deleteProduct(product.id)">Delete</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <ngb-pagination [collectionSize]="collectionSize" [(page)]="advancedPagination" [maxSize]="5" [rotate]="true"
+                                (pageChange)="changePage($event)" [ellipses]="false" [boundaryLinks]="true" [pageSize] = "tableParams.limit">
+                </ngb-pagination>
+            </div>
+        </div>
+    </div>
+</div>

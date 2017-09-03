@@ -3,8 +3,8 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {TinymceModule} from 'angular2-tinymce';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {OwnerComponent} from './owner.component';
-import {OwnerRoutingModule} from './owner-routing.module';
+import {ProductComponent} from './product.component';
+import {ProductRoutingModule} from './product-routing.module';
 import {PageHeaderModule, ModalModule} from './../../shared';
 import {ModalComponent} from "../../shared/modules/modal/modal.component";
 
@@ -13,14 +13,14 @@ import {ModalComponent} from "../../shared/modules/modal/modal.component";
         CommonModule,
         FormsModule,
         NgbModule.forRoot(),
-        OwnerRoutingModule,
+        ProductRoutingModule,
         ModalModule,
         PageHeaderModule,
         TinymceModule.withConfig({})
 
     ],
     providers: [ModalComponent],
-    declarations: [OwnerComponent]
+    declarations: [ProductComponent]
 })
-export class OwnerModule {
+export class ProductModule {
 }

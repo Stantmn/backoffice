@@ -1,34 +1,35 @@
 import {Component, OnInit} from '@angular/core';
-import {Owner} from '../../classes/owner';
-import {OwnerService} from '../../services/owner.service';
+import {Product} from '../../classes/product';
+import {ProductService} from '../../services/product.service';
 import {FileService} from '../../services/file.service';
 import {Settings} from '../../constants/settings';
 import {ModalComponent} from "../../shared/modules/modal/modal.component";
 
 @Component({
     moduleId: module.id,
-    selector: 'app-owner',
-    templateUrl: './owner.component.html',
-    styleUrls: ['./owner.component.scss'],
-    providers: [OwnerService, FileService]
+    selector: 'app-product',
+    templateUrl: './product.component.html',
+    styleUrls: ['./product.component.scss'],
+    providers: [ProductService, FileService]
 })
 
-export class OwnerComponent implements OnInit {
-    private ownerList: Owner[] = [];
-    private owner: Owner;
+export class ProductComponent implements OnInit {
+    public productList: Product[] = [];
+    private product: Product;
     private errorMessage: any;
     private result: any;
-    private frequencyList: {};
-    private paymentMethodsList: {};
+    private categoryList: {};
     private statusList: {};
     private tableParams: any;
     private advancedPagination: number;
     private collectionSize: number;
-    private fileList: Array<File>;
+    public fileList: Array<File>;
+    private showFormFlag: boolean;
 
-    constructor(private ownerService: OwnerService, private modal: ModalComponent, private fileService: FileService) {
-        this.owner = new Owner;
-        this.owner.files = [];
+
+    constructor(private productService: ProductService, private modal: ModalComponent, private fileService: FileService) {
+        this.product = new Product;
+        this.product.files = [];
         this.fileList = [];
         this.tableParams = {
             page: 1,
@@ -38,34 +39,34 @@ export class OwnerComponent implements OnInit {
             search: ''
         };
         this.advancedPagination = 1;
+        this.showFormFlag = false;
     }
 
     ngOnInit() {
-        this.getOwners();
-        this.ownerCancel();
-        this.frequencyList = Settings.PAYMENT_FREQUENCY;
-        this.paymentMethodsList = Settings.PAYMENT_METHOD;
-        this.statusList = Settings.OWNER_STATUS;
+        // this.getProducts();
+        this.productCancel();
+        this.statusList = Settings.PRODUCT_STATUS;
+        this.categoryList = Settings.CATEGORIES;
     }
 
-    getOwners(): void {
-        this.ownerService.getOwners(this.tableParams)
+    getProducts(): void {
+        this.productService.getProducts(this.tableParams)
             .subscribe(
                 response => {
-                    this.ownerList = response.owners;
+                    this.productList = response.products;
                     this.collectionSize = response.count;
                 },
                 error => this.errorMessage = <any>error
             );
     }
 
-    getOwner(id: number) {
-        return this.ownerService.getOwner(id)
+    getProduct(id: number) {
+        return this.productService.getProduct(id)
             .subscribe(
                 response => {
-                    this.owner = response;
+                    this.product = response;
 
-                    if (this.owner.fileGrp) {
+                    if (this.product.fileGrp) {
                         this.getFileInfo();
                     }
                 },
@@ -73,16 +74,16 @@ export class OwnerComponent implements OnInit {
             );
     }
 
-    deleteOwner(id: number): void {
-        this.modal.openMessage('Delete Owner', 'A you sure?', 1)
+    deleteProduct(id: number): void {
+        this.modal.openMessage('Delete Product', 'A you sure?', 1)
             .then(result => {
                 if (result) {
-                    this.ownerService.deleteOwner(id)
+                    this.productService.deleteProduct(id)
                         .subscribe(
                             response => this.result = response,
                             error => this.errorMessage = <any>error,
                             () => {
-                                this.getOwners();
+                                this.getProducts();
                             }
                         );
                 }
@@ -92,26 +93,26 @@ export class OwnerComponent implements OnInit {
             });
     }
 
-    ownerSave(): void {
-        if (this.owner.firstName && this.owner.lastName) {
-            if (this.owner.id) {
-                this.ownerService.updateOwner(this.owner)
+    productSave(): void {
+        if (this.product.name && this.product.description && this.product.cost) {
+            if (this.product.id) {
+                this.productService.updateProduct(this.product)
                     .subscribe(
                         response => this.result = response,
                         error => this.errorMessage = <any>error,
                         () => {
-                            this.getOwners();
-                            this.ownerCancel();
+                            this.getProducts();
+                            this.productCancel();
                         }
                     );
             } else {
-                this.ownerService.addOwner(this.owner)
+                this.productService.addProduct(this.product)
                     .subscribe(
                         response => this.result = response,
                         error => this.errorMessage = <any>error,
                         () => {
-                            this.getOwners();
-                            this.ownerCancel();
+                            this.getProducts();
+                            this.productCancel();
                         }
                     );
             }
@@ -119,13 +120,13 @@ export class OwnerComponent implements OnInit {
     }
 
     getFileInfo(): void {
-        this.fileService.getFiles(this.owner.fileGrp)
+        this.fileService.getFiles(this.product.fileGrp)
             .subscribe(
                 (res) => {
-                    this.owner.files = [];
+                    this.product.files = [];
                     if (res.length > 0) {
                         for (let i = 0; i < res.length; i++) {
-                            this.owner.files[i] = res[i].filename;
+                            this.product.files[i] = res[i].filename;
                         }
                     }
                 })
@@ -154,13 +155,13 @@ export class OwnerComponent implements OnInit {
         }
 
         formData.append('type', 1);
-        if (this.owner.fileGrp) {
-            formData.append('fileGrp', this.owner.fileGrp);
+        if (this.product.fileGrp) {
+            formData.append('fileGrp', this.product.fileGrp);
         }
         this.fileService.uploadFiles(formData)
             .subscribe(
                 (res) => {
-                    this.owner.fileGrp = res;
+                    this.product.fileGrp = res;
                     this.getFileInfo();
                 },
                 (error) => {
@@ -168,36 +169,40 @@ export class OwnerComponent implements OnInit {
                 })
     }
 
-    editOwner(id: number): void {
-        this.getOwner(id);
+    editProduct(id: number): void {
+        this.getProduct(id);
         document.body.scrollTop = 0;
     }
 
-    ownerCancel(): void {
-        this.owner.id = null;
-        this.owner.firstName = "";
-        this.owner.lastName = "";
-        this.owner.shippingAddress = "";
-        this.owner.billingAddress = "";
-        this.owner.phone = "";
-        this.owner.email = "";
-        this.owner.paymentMethod = null;
-        this.owner.frequency = null;
-        this.owner.status = null;
-        this.owner.password = "";
-        this.owner.files = [];
-        this.owner.fileGrp = null;
+    productCancel(): void {
+        this.product.id = null;
+        this.product.name = "";
+        this.product.description = "";
+        this.product.cost = null;
+        this.product.status = null;
+        this.product.files = [];
+        this.product.fileGrp = null;
+        this.showFormFlag = false;
     }
+
+    setShowForm(flag: boolean): void {
+        if (!flag) {
+            this.productCancel();
+        }else {
+            this.showFormFlag = true;
+        }
+    }
+
 
     searchFilter(): void {
         if (this.tableParams.search.length > 3 || this.tableParams.search == '') {
-            this.getOwners();
+            this.getProducts();
         }
     }
 
     changePage(page: number): void {
         this.tableParams.page = page;
-        this.getOwners();
+        this.getProducts();
     }
 
     sortField(field: number): void {
@@ -207,7 +212,7 @@ export class OwnerComponent implements OnInit {
         } else {
             this.tableParams.sortType = "ASC";
         }
-        this.getOwners();
+        this.getProducts();
     }
 
 }

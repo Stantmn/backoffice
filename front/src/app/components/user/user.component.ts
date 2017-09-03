@@ -11,7 +11,7 @@ import {ModalComponent} from "../../shared/modules/modal/modal.component";
     providers: [UserService]
 })
 export class UserComponent implements OnInit {
-    private userList: User[] = [];
+    public userList: User[] = [];
     private user: User;
     private errorMessage: any;
     private result: any;
@@ -19,6 +19,7 @@ export class UserComponent implements OnInit {
     private tableParams: any;
     private advancedPagination: number;
     private collectionSize: number;
+    private showFormFlag: boolean;
 
 
     constructor(private userService: UserService, private modal: ModalComponent) {
@@ -31,6 +32,7 @@ export class UserComponent implements OnInit {
             search: ''
         };
         this.advancedPagination = 1;
+        this.showFormFlag = false;
     }
 
     ngOnInit() {
@@ -87,6 +89,7 @@ export class UserComponent implements OnInit {
     }
 
     editUser(id: number): void {
+        this.setShowForm(!this.showFormFlag);
         this.getUser(id);
         document.body.scrollTop = 0;
     }
@@ -118,10 +121,19 @@ export class UserComponent implements OnInit {
         this.user.email = "";
         this.user.role = null;
         this.user.password = "";
+        this.showFormFlag = false;
+    }
+
+    setShowForm(flag: boolean): void {
+        if (!flag) {
+            this.userCancel();
+        }else {
+            this.showFormFlag = true;
+        }
     }
 
     searchFilter(): void {
-        if(this.tableParams.search.length > 3 || this.tableParams.search == ''){
+        if (this.tableParams.search.length > 3 || this.tableParams.search == '') {
             this.getUsers();
         }
     }

@@ -6,9 +6,8 @@ const routes: Routes = [
     {
         path: '', component: LayoutComponent,
         children: [
-            {path: 'owner', loadChildren: '../owner/owner.module#OwnerModule'},
             {path: 'user', loadChildren: '../user/user.module#UserModule'},
-            {path: 'page', loadChildren: '../page/page.module#PageModule'},
+            {path: 'product', loadChildren: '../product/product.module#ProductModule'},
         ]
     }
 ];

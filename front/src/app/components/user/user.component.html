@@ -1,5 +1,5 @@
 <app-page-header [heading]="'Users'" [icon]="'fa-table'"></app-page-header>
-<div class="row">
+<div class="row" *ngIf="showFormFlag">
     <div class="col col-xl-12 col-lg-12">
         <div class="card mb-3">
             <div class="card-header">{{user.id ? 'Edit' : 'Add'}} Users</div>
@@ -56,14 +56,18 @@
         <div class="card mb-3">
             <div class="card-header">Users</div>
             <div class="card-block table-responsive">
+                <button class="btn btn-success" (click)="setShowForm(!showFormFlag)">Add New</button>
+                <br><br>
                 <input class="form-control" [(ngModel)]="tableParams.search" name="search"
-                       placeholder="Enter a Name" (keyup)="searchFilter()">
+                       placeholder="Search by Name" (keyup)="searchFilter()">
                 <br>
                 <table class="table table-bordered">
                     <thead>
                     <tr>
                         <th (click)="sortField(1)" style="cursor: pointer;">#</th>
-                        <th (click)="sortField(2)" style="cursor: pointer;" width="80%">Name</th>
+                        <th (click)="sortField(2)" style="cursor: pointer;">Name</th>
+                        <th (click)="sortField(4)" style="cursor: pointer;">Email</th>
+                        <th (click)="sortField(2)" style="cursor: pointer;">Role</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
@@ -72,6 +76,8 @@
                     <tr *ngFor="let user of userList; let i = index;">
                         <td>{{user.id}}</td>
                         <td class="central">{{user.firstName}} {{user.lastName}}</td>
+                        <td>{{user.email}}</td>
+                        <td>{{roles[user.role].name}}</td>
                         <td>
                             <button class="btn btn-warning" (click)="editUser(user.id)">Edit</button>
                         </td>

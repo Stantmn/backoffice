@@ -6,11 +6,11 @@ import {HttpService} from "../../services/http.service";
 import {FormsModule} from '@angular/forms';
 import {PageHeaderModule, ModalModule} from './../../shared';
 import {ModalComponent} from "../../shared/modules/modal/modal.component";
-import {OwnerComponent} from './owner.component';
+import {ProductComponent} from './product.component';
 
-describe('OwnerComponent', () => {
-    let component: OwnerComponent;
-    let fixture: ComponentFixture<OwnerComponent>;
+describe('ProductComponent', () => {
+    let component: ProductComponent;
+    let fixture: ComponentFixture<ProductComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -27,13 +27,13 @@ describe('OwnerComponent', () => {
                 Http,
                 ModalComponent
             ],
-            declarations: [OwnerComponent]
+            declarations: [ProductComponent]
         })
             .compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(OwnerComponent);
+        fixture = TestBed.createComponent(ProductComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

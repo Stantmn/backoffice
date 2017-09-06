@@ -2,3 +2,30 @@
 //
 // Copy variables from `_variables.scss` to this file to override default values
 // without modifying source files.
+
+
+//color
+$main-color:      #2a3f54;
+$second-color:    #73879C;
+$inverse-bg:      $main-color;
+
+//table
+$table-inverse-bg:              $main-color;
+
+//font
+$font-family-sans-serif: "Helvetica Neue", -apple-system, system-ui, BlinkMacSystemFont, Roboto, Arial, "Droid Sans", sans-serif;
+$font-family-serif:      "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
+$font-family-monospace:  Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+$font-family-base:       $font-family-sans-serif;
+
+$font-size-base: 13px;
+
+//pagination
+$pagination-active-bg: $main-color;
+
+//button
+$btn-success-bg:  $main-color;
+$btn-success-border:  $main-color;
+$btn-warning-bg:  $second-color;
+$btn-warning-border:  $second-color;
+

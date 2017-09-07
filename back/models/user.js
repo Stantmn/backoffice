@@ -7,7 +7,8 @@ function User() {
         let count = 0;
         let where = '';
         if (query.search) {
-            where = " where first_name like '%" + query.search + "%' or "+ "last_name like '%" + query.search + "%'";
+            where = " where email like '%" + query.search + "%' or first_name like '%" + query.search + "%' or "+
+                "last_name like '%" + query.search + "%'";
         }
         db.one('select count(*) from users' + where)
             .then(function (data) {
@@ -32,7 +33,6 @@ function User() {
                 console.log(err);
                 res.status(500).send(err);
             });
-
     };
 
     this.get = function (id, res) {

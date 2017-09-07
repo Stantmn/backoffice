@@ -2,18 +2,18 @@
 const db = require('../config/connection');
 const account = require('../models/account');
 
-function Owner() {
+function Customer() {
     this.list = function (query, res) {
         let count = 0;
         let where = '';
         if (query.search) {
-            where = " where first_name like '%" + query.search + "%' or "+ "last_name like '%" + query.search + "%'";
+            where = " where email like '%" + query.search + "%' or first_name like '%" + query.search + "%' or last_name like '%" + query.search + "%'";
         }
-        db.one('select count(*) from owner' + where)
+        db.one('select count(*) from customer' + where)
             .then(function (data) {
                 count = data.count;
-                db.any('select id, first_name as "firstName", last_name as "lastName", status from owner' + where +
-                    ' order by ' + query.sort + ' ' + query.sortType + ' limit ' + query.limit + ' offset ' +
+                db.any('select id, first_name as "firstName", last_name as "lastName", email, status from customer' +
+                    where + ' order by ' + query.sort + ' ' + query.sortType + ' limit ' + query.limit + ' offset ' +
                     (query.page - 1) * query.limit)
                     .then(function (data) {
                         res.status(200)
@@ -36,8 +36,9 @@ function Owner() {
 
     this.get = function (id, res) {
         db.one('select id, first_name as "firstName", last_name as "lastName", shipping_address as "shippingAddress", ' +
-            'billing_address as "billingAddress", phone, email, payment_method as "paymentMethod", ' +
-            'frequency, status, file_grp as "fileGrp" from owner where id = $1', id)
+            'billing_address as "billingAddress", phone, email, status, file_grp as "fileGrp", shipping_different as ' +
+            '"shippingDifferent" from customer ' +
+            'where id = $1', id)
             .then(function (data) {
                 res.status(200)
                     .json({
@@ -51,22 +52,26 @@ function Owner() {
             });
     };
 
-    this.create = function (owner, res) {
+    this.create = function (customer, res) {
         let userPassword = {};
 
-        if (!owner.shippingAddress) owner.shippingAddress = null;
-        if (!owner.billingAddress) owner.billingAddress = null;
-        if (!owner.phone) owner.phone = null;
-        if (!owner.paymentMethod) owner.paymentMethod = null;
-        if (!owner.frequency) owner.frequency = null;
+        if (!customer.shippingAddress) {
+            customer.shippingAddress = null;
+            customer.shippingDifferent = false;
+        } else {
+            customer.shippingDifferent = true;
+        }
+        if (!customer.billingAddress) customer.billingAddress = null;
+        if (!customer.phone) customer.phone = null;
+        if (!customer.fileGrp) customer.fileGrp = null;
 
-        db.one('insert into owner (first_name, last_name, shipping_address, billing_address, phone, email, ' +
-            'payment_method, frequency, status, file_grp)' + ' values (${firstName}, ${lastName}, ${shippingAddress}, ' +
-            '${billingAddress}, ${phone}, ${email}, ${paymentMethod}, ${frequency}, ${status}, ${fileGrp}) ' +
-            'RETURNING id', owner)
+        db.one('insert into customer (first_name, last_name, shipping_address, billing_address, phone, email, ' +
+            'status, file_grp, shipping_different)' + ' values (${firstName}, ${lastName}, ${shippingAddress}, ' +
+            '${billingAddress}, ${phone}, ${email}, ${status}, ${fileGrp}), ${shippingDifferent} ' +
+            'RETURNING id', customer)
             .then(function (data) {
-                if (owner.password) {
-                    userPassword = account.saltHashPassword(owner.password);
+                if (customer.password) {
+                    userPassword = account.saltHashPassword(customer.password);
                     userPassword.id = data.id;
                     savePassword(userPassword);
                 }
@@ -83,23 +88,28 @@ function Owner() {
             });
     };
 
-    this.update = function (owner, res) {
+    this.update = function (customer, res) {
         let userPassword = {};
 
-        if (!owner.shippingAddress) owner.shippingAddress = null;
-        if (!owner.billingAddress) owner.billingAddress = null;
-        if (!owner.phone) owner.phone = null;
-        if (!owner.paymentMethod) owner.paymentMethod = null;
-        if (!owner.frequency) owner.frequency = null;
+        if (!customer.shippingAddress) {
+            customer.shippingAddress = null;
+            customer.shippingDifferent = false;
+        } else {
+            customer.shippingDifferent = true;
+        }
+        if (!customer.billingAddress) customer.billingAddress = null;
+        if (!customer.phone) customer.phone = null;
+        if (!customer.paymentMethod) customer.paymentMethod = null;
+        if (!customer.frequency) customer.frequency = null;
 
-        db.none('update owner set first_name = ${firstName}, last_name = ${lastName}, ' +
+        db.none('update customer set first_name = ${firstName}, last_name = ${lastName}, ' +
             'shipping_address = ${shippingAddress}, billing_address = ${billingAddress}, phone = ${phone}, ' +
-            'email = ${email}, payment_method = ${paymentMethod}, frequency = ${frequency}, status = ${status}, ' +
-            'file_grp = ${fileGrp} where id = ${id}', owner)
+            'email = ${email}, status = ${status}, ' +
+            'file_grp = ${fileGrp}, shipping_different = ${shippingDifferent} where id = ${id}', customer)
             .then(function () {
-                if (owner.password) {
-                    userPassword = account.saltHashPassword(owner.password);
-                    userPassword.id = owner.id;
+                if (customer.password) {
+                    userPassword = account.saltHashPassword(customer.password);
+                    userPassword.id = customer.id;
                     savePassword(userPassword);
                 }
 
@@ -115,7 +125,7 @@ function Owner() {
     };
 
     let savePassword = function (userPassword) {
-        db.none('update owner set password = ${hash}, salt = ${salt} where id = ${id}', userPassword)
+        db.none('update customer set password = ${hash}, salt = ${salt} where id = ${id}', userPassword)
             .then(function () {
                 //TODO Email sending
             })
@@ -126,7 +136,7 @@ function Owner() {
     };
 
     this.delete = function (id, res) {
-        db.none('delete from owner where id = $1', [id])
+        db.none('delete from customer where id = $1', [id])
             .then(function () {
                 res.status(204)
                     .json({
@@ -141,4 +151,4 @@ function Owner() {
 
 }
 
-module.exports = new Owner();
+module.exports = new Customer();

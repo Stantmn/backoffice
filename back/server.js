@@ -1,7 +1,7 @@
 'use strict';
 const express = require('express');
 const bodyParser = require('body-parser');
-const owner = require('./routes/owner');
+const customer = require('./routes/customer');
 const user = require('./routes/user');
 const login = require('./routes/login');
 const fileList = require('./routes/file-list');
@@ -32,7 +32,7 @@ app.use(function (req, res, next) {
 
 //routes
 app.use('/', user);
-app.use('/', owner);
+app.use('/', customer);
 app.use('/', fileList);
 
 app.use('*', function (req, res) {

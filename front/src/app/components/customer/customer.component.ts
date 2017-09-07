@@ -14,7 +14,7 @@ import {ModalComponent} from "../../shared/modules/modal/modal.component";
 })
 
 export class CustomerComponent implements OnInit {
-    private customerList: Customer[] = [];
+    public customerList: Customer[] = [];
     private customer: Customer;
     private errorMessage: any;
     private result: any;
@@ -22,7 +22,7 @@ export class CustomerComponent implements OnInit {
     private tableParams: any;
     private advancedPagination: number;
     private collectionSize: number;
-    private fileList: Array<File>;
+    public fileList: Array<File>;
 
     constructor(private customerService: CustomerService, private modal: ModalComponent, private fileService: FileService) {
         this.customer = new Customer;
@@ -131,6 +131,7 @@ export class CustomerComponent implements OnInit {
         this.fileService.deleteFile(filename)
             .subscribe(
                 (res) => {
+                    console.log(res);
                     this.getFileInfo();
                 },
                 (error) => {
@@ -173,8 +174,9 @@ export class CustomerComponent implements OnInit {
         this.customer.id = null;
         this.customer.firstName = "";
         this.customer.lastName = "";
-        this.customer.shippingAddress = "";
         this.customer.billingAddress = "";
+        this.customer.shippingDifferent = false;
+        this.customer.shippingAddress = "";
         this.customer.phone = "";
         this.customer.email = "";
         this.customer.status = null;

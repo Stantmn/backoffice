@@ -38,15 +38,23 @@
                     </fieldset>
 
                     <fieldset class="form-group align-middle">
-                        <label>Shipping Address</label>
-                        <input class="form-control" [(ngModel)]="customer.shippingAddress" name="shippingAddress"
-                               placeholder="Enter a Shipping Address">
-                    </fieldset>
-
-                    <fieldset class="form-group align-middle">
                         <label>Billing Address</label>
                         <input class="form-control" [(ngModel)]="customer.billingAddress" name="billingAddress"
                                placeholder="Enter a Billing Address">
+                    </fieldset>
+
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" name="shippingDifferent"
+                                   [(ngModel)]="customer.shippingDifferent">
+                            Shipping address is different
+                        </label>
+                    </div>
+
+                    <fieldset class="form-group align-middle" *ngIf="customer.shippingDifferent">
+                        <label>Shipping Address</label>
+                        <input class="form-control" [(ngModel)]="customer.shippingAddress" name="shippingAddress"
+                               placeholder="Enter a Shipping Address">
                     </fieldset>
 
                     <fieldset class="form-group align-middle">

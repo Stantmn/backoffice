@@ -10,7 +10,7 @@
 
                     <fieldset class="form-group align-middle">
                         <label>Category</label>
-                        <select class="form-control" [(ngModel)]="product.category" name="status">
+                        <select class="form-control" [(ngModel)]="product.category" name="category" required>
                             <option *ngFor="let item of categoryList;" [ngValue]="item.value">{{ item.name }}</option>
                         </select>
                     </fieldset>
@@ -34,7 +34,7 @@
 
                     <fieldset class="form-group align-middle">
                         <label>Status</label>
-                        <select class="form-control" [(ngModel)]="product.status" name="status">
+                        <select class="form-control" [(ngModel)]="product.status" name="status" required>
                             <option *ngFor="let item of statusList;" [ngValue]="item.value">{{ item.name }}</option>
                         </select>
                     </fieldset>
@@ -76,14 +76,16 @@
                 <button class="btn btn-success" (click)="setShowForm(!showFormFlag)">Add New</button>
                 <br><br>
                 <input class="form-control" [(ngModel)]="tableParams.search" name="search"
-                       placeholder="Enter a Name" (keyup)="searchFilter()">
+                       placeholder="Enter a Name" (keyup)="searchFilter()" *ngIf="productList.length">
                 <br>
-                <table class="table table-bordered">
+                <table class="table table-bordered" *ngIf="productList.length">
                     <thead class="thead-inverse">
                     <tr>
                         <th (click)="sortField(1)" style="cursor: pointer;">#</th>
-                        <th (click)="sortField(2)" style="cursor: pointer;" width="60%">Name</th>
-                        <th (click)="sortField(4)" style="cursor: pointer;" width="20%">Status</th>
+                        <th (click)="sortField(4)" style="cursor: pointer;">Category</th>
+                        <th (click)="sortField(2)" style="cursor: pointer;">Name</th>
+                        <th (click)="sortField(3)" style="cursor: pointer;">Cost</th>
+                        <th (click)="sortField(5)" style="cursor: pointer;">Status</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
@@ -91,8 +93,14 @@
                     <tbody>
                     <tr *ngFor="let product of productList; let i = index;">
                         <td>{{product.id}}</td>
-                        <td class="central">
-                            <a href="/vehicle/{{product.id}}"> {{product.firstName}} {{product.lastName}}</a>
+                        <td>
+                            {{categoryList[product.category].name}}
+                        </td>
+                        <td>
+                            {{product.name}}
+                        </td>
+                        <td>
+                            {{product.cost}}
                         </td>
                         <td class="central">{{statusList[product.status].name}}</td>
                         <td>
@@ -104,9 +112,13 @@
                     </tr>
                     </tbody>
                 </table>
-                <ngb-pagination [collectionSize]="collectionSize" [(page)]="advancedPagination" [maxSize]="5" [rotate]="true"
-                                (pageChange)="changePage($event)" [ellipses]="false" [boundaryLinks]="true" [pageSize] = "tableParams.limit">
+                <ngb-pagination [collectionSize]="collectionSize" [(page)]="advancedPagination" [maxSize]="5"
+                                [rotate]="true" *ngIf="productList.length" (pageChange)="changePage($event)"
+                                [ellipses]="false" [boundaryLinks]="true" [pageSize] = "tableParams.limit">
                 </ngb-pagination>
+                <div *ngIf="!productList.length">
+                    Products not found
+                </div>
             </div>
         </div>
     </div>

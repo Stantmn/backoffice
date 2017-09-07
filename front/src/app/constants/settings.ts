@@ -7,12 +7,13 @@ export class Settings {
         {value: 3, name: "Games"}
     ];
     public static PRODUCT_STATUS: {} = [
-        {value: 0, name: "Show"},
-        {value: 1, name: "Hide"},
+        {value: 0, name: "Hide"},
+        {value: 1, name: "Show"},
     ];
     public static CUSTOMER_STATUS: {} = [
-        {value: 0, name: "Inactive"},
+        {value: 0, name: "Undefined"},
         {value: 1, name: "Active"},
+        {value: 2, name: "Inactive"},
     ];
     public static USER_ROLES: {} = [
         {value: 0, name: "Undefined"},

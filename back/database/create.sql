@@ -51,3 +51,17 @@ create table attach
 	type smallint not null
 );
 
+create table product
+(
+	id serial not null
+		constraint product_pkey
+		primary key,
+	category integer default 1 not null,
+	name varchar(250) not null,
+	description varchar(4000) not null,
+	cost numeric(8,2) not null,
+	status integer default 1 not null,
+	file_grp integer
+)
+;
+

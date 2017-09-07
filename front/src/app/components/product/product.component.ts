@@ -27,7 +27,11 @@ export class ProductComponent implements OnInit {
     private showFormFlag: boolean;
 
 
-    constructor(private productService: ProductService, private modal: ModalComponent, private fileService: FileService) {
+    constructor(
+        private productService: ProductService,
+        private modal: ModalComponent,
+        private fileService: FileService
+    ) {
         this.product = new Product;
         this.product.files = [];
         this.fileList = [];
@@ -42,7 +46,7 @@ export class ProductComponent implements OnInit {
     }
 
     ngOnInit() {
-        // this.getProducts();
+        this.getProducts();
         this.productCancel();
         this.statusList = Settings.PRODUCT_STATUS;
         this.categoryList = Settings.CATEGORIES;
@@ -188,7 +192,7 @@ export class ProductComponent implements OnInit {
     setShowForm(flag: boolean): void {
         if (!flag) {
             this.productCancel();
-        }else {
+        } else {
             this.showFormFlag = true;
         }
     }

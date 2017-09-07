@@ -73,7 +73,7 @@
                                        placeholder="Upload file..." accept="image/x-png,image/gif,image/jpeg" multiple />
                                 <br>
                                 <li *ngFor="let file of customer.files">
-                                    {{file}} <i style="cursor: pointer;" (click)="deleteFile(file)" class="fa fa-remove"></i>
+                                    {{file}}<i style="cursor: pointer;" (click)="deleteFile(file)" class="fa fa-remove"></i>
                                 </li>
                             </div>
                         </div>
@@ -101,7 +101,7 @@
                 <button class="btn btn-success" (click)="setShowForm(!showFormFlag)">Add New</button>
                 <br><br>
                 <input class="form-control" [(ngModel)]="tableParams.search" name="search"
-                       placeholder="Enter a Name" (keyup)="searchFilter()">
+                       placeholder="Enter a Name" (keyup)="searchFilter()" *ngIf="customerList.length">
                 <br>
                 <table class="table table-bordered" *ngIf="customerList.length">
                     <thead class="thead-inverse">

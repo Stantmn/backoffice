@@ -132,7 +132,6 @@ export class CustomerComponent implements OnInit {
         this.fileService.deleteFile(filename)
             .subscribe(
                 (res) => {
-                    console.log(res);
                     this.getFileInfo();
                 },
                 (error) => {
@@ -191,7 +190,7 @@ export class CustomerComponent implements OnInit {
     setShowForm(flag: boolean): void {
         if (!flag) {
             this.customerCancel();
-        }else {
+        } else {
             this.showFormFlag = true;
         }
     }

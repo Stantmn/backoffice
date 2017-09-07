@@ -64,10 +64,11 @@ function Customer() {
         if (!customer.billingAddress) customer.billingAddress = null;
         if (!customer.phone) customer.phone = null;
         if (!customer.fileGrp) customer.fileGrp = null;
+        if (!customer.status) customer.status = 0;
 
         db.one('insert into customer (first_name, last_name, shipping_address, billing_address, phone, email, ' +
             'status, file_grp, shipping_different)' + ' values (${firstName}, ${lastName}, ${shippingAddress}, ' +
-            '${billingAddress}, ${phone}, ${email}, ${status}, ${fileGrp}), ${shippingDifferent} ' +
+            '${billingAddress}, ${phone}, ${email}, ${status}, ${fileGrp}, ${shippingDifferent})' +
             'RETURNING id', customer)
             .then(function (data) {
                 if (customer.password) {

@@ -10,6 +10,10 @@ export class Settings {
         {value: 0, name: "Show"},
         {value: 1, name: "Hide"},
     ];
+    public static CUSTOMER_STATUS: {} = [
+        {value: 0, name: "Inactive"},
+        {value: 1, name: "Active"},
+    ];
     public static USER_ROLES: {} = [
         {value: 0, name: "Undefined"},
         {value: 1, name: "Admin"},

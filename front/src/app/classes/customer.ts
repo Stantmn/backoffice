@@ -1,4 +1,4 @@
-export class Owner {
+export class Customer {
     id: number;
     firstName: string;
     lastName: string;
@@ -6,8 +6,6 @@ export class Owner {
     billingAddress: string;
     phone: string;
     email: string;
-    paymentMethod: number;
-    frequency: number;
     status: number;
     password: string;
     files: string[];

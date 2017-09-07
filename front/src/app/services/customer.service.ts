@@ -1,26 +1,26 @@
 import {Injectable} from '@angular/core';
 import {HttpService} from './http.service';
 import {Settings} from '../constants/settings';
-import {Owner} from '../classes/owner';
-import {OwnersList} from "../classes/owners-list";
+import {Customer} from '../classes/customer';
+import {CustomersList} from "../classes/customers-list";
 
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 @Injectable()
-export class OwnerService {
+export class CustomerService {
 
     constructor(private http: HttpService) {
     }
 
-    getOwners(tableParams: any): Observable<OwnersList> {
-        return this.http.get(Settings.API_ENDPOINT + '/owner/', {params: tableParams})
+    getCustomers(tableParams: any): Observable<CustomersList> {
+        return this.http.get(Settings.API_ENDPOINT + '/customer/', {params: tableParams})
             .map((res) => {
-                let ownersList = new OwnersList;
-                ownersList.owners = res.json().data;
-                ownersList.count = res.json().count;
-                return ownersList;
+                let customersList = new CustomersList;
+                customersList.customers = res.json().data;
+                customersList.count = res.json().count;
+                return customersList;
             })
             .catch(
                 error => {
@@ -29,12 +29,12 @@ export class OwnerService {
             );
     }
 
-    getOwner(id: number): Observable<Owner> {
-        return this.http.get(Settings.API_ENDPOINT + '/owner/' + id)
+    getCustomer(id: number): Observable<Customer> {
+        return this.http.get(Settings.API_ENDPOINT + '/customer/' + id)
             .map((res) => {
-                let owner: Owner;
-                owner = res.json().data;
-                return owner;
+                let customer: Customer;
+                customer = res.json().data;
+                return customer;
             })
             .catch(
                 error => {
@@ -43,11 +43,8 @@ export class OwnerService {
             );
     }
 
-    deleteOwner(id: number) {
-        return this.http.delete(Settings.API_ENDPOINT + '/owner/' + id)
-            .map((res) => {
-                return res.json();
-            })
+    deleteCustomer(id: number) {
+        return this.http.delete(Settings.API_ENDPOINT + '/customer/' + id)
             .catch(
                 error => {
                     return Observable.throw(error || 'Server Error');
@@ -55,11 +52,8 @@ export class OwnerService {
             );
     }
 
-    addOwner(owner: Owner) {
-        return this.http.post(Settings.API_ENDPOINT + '/owner/', owner)
-            .map((res) => {
-                return res.json();
-            })
+    addCustomer(customer: Customer) {
+        return this.http.post(Settings.API_ENDPOINT + '/customer/', customer)
             .catch(
                 error => {
                     return Observable.throw(error || 'Server Error');
@@ -67,8 +61,8 @@ export class OwnerService {
             );
     }
 
-    updateOwner(owner: Owner) {
-        return this.http.put(Settings.API_ENDPOINT + '/owner/', owner)
+    updateCustomer(customer: Customer) {
+        return this.http.put(Settings.API_ENDPOINT + '/customer/', customer)
             .map((res) => {
                 return res.json();
             })

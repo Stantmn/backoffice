@@ -61,8 +61,8 @@
                 <input class="form-control" [(ngModel)]="tableParams.search" name="search"
                        placeholder="Search by Name" (keyup)="searchFilter()">
                 <br>
-                <table class="table table-bordered table-inverse">
-                    <thead>
+                <table class="table table-bordered">
+                    <thead class="thead-inverse">
                     <tr>
                         <th (click)="sortField(1)" style="cursor: pointer;">#</th>
                         <th (click)="sortField(2)" style="cursor: pointer;">Name</th>

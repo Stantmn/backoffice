@@ -1,3 +1,4 @@
+'use strict';
 const db = require('../config/connection');
 const account = require('../models/account');
 
@@ -51,6 +52,8 @@ function User() {
 
     this.create = function (user, res) {
         let userPassword = {};
+        if (!user.role) user.role = 0;
+
         db.one('insert into users (first_name, last_name, email, role)' +
             ' values (${firstName}, ${lastName}, ${email}, ${role}) RETURNING id', user)
             .then(function (data) {

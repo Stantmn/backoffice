@@ -71,7 +71,6 @@ function Product() {
     };
 
     this.update = function (product, res) {
-        let userPassword = {};
 
         if (!product.category) product.category = 0;
         if (!product.cost) product.cost = null;

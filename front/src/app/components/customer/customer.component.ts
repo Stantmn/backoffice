@@ -23,6 +23,7 @@ export class CustomerComponent implements OnInit {
     private advancedPagination: number;
     private collectionSize: number;
     public fileList: Array<File>;
+    private showFormFlag: boolean;
 
     constructor(private customerService: CustomerService, private modal: ModalComponent, private fileService: FileService) {
         this.customer = new Customer;
@@ -167,6 +168,7 @@ export class CustomerComponent implements OnInit {
 
     editCustomer(id: number): void {
         this.getCustomer(id);
+        this.showFormFlag = !this.showFormFlag;
         document.body.scrollTop = 0;
     }
 
@@ -183,6 +185,15 @@ export class CustomerComponent implements OnInit {
         this.customer.password = "";
         this.customer.files = [];
         this.customer.fileGrp = null;
+        this.showFormFlag = false;
+    }
+
+    setShowForm(flag: boolean): void {
+        if (!flag) {
+            this.customerCancel();
+        }else {
+            this.showFormFlag = true;
+        }
     }
 
     searchFilter(): void {

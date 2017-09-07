@@ -39,7 +39,6 @@ export class ProductComponent implements OnInit {
             search: ''
         };
         this.advancedPagination = 1;
-        this.showFormFlag = false;
     }
 
     ngOnInit() {
@@ -171,6 +170,7 @@ export class ProductComponent implements OnInit {
 
     editProduct(id: number): void {
         this.getProduct(id);
+        this.showFormFlag = !this.showFormFlag;
         document.body.scrollTop = 0;
     }
 
@@ -192,7 +192,6 @@ export class ProductComponent implements OnInit {
             this.showFormFlag = true;
         }
     }
-
 
     searchFilter(): void {
         if (this.tableParams.search.length > 3 || this.tableParams.search == '') {

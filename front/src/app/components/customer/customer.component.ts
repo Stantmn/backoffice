@@ -23,7 +23,7 @@ export class CustomerComponent implements OnInit {
     private advancedPagination: number;
     private collectionSize: number;
     public fileList: Array<File>;
-    private showFormFlag: boolean;
+    public showFormFlag: boolean;
 
     constructor(private customerService: CustomerService, private modal: ModalComponent, private fileService: FileService) {
         this.customer = new Customer;

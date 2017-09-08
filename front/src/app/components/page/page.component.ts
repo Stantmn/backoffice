@@ -13,14 +13,14 @@ import {FileService} from "../../services/file.service";
 })
 
 export class PageComponent implements OnInit {
-    private pageList: Page[] = [];
-    private page: Page;
+    public pageList: Page[] = [];
+    public page: Page;
     private errorMessage: any;
     private result: any;
-    private fileList: Array<File>;
-    private tableParams: any;
-    private advancedPagination: number;
-    private collectionSize: number;
+    public fileList: Array<File>;
+    public tableParams: any;
+    public advancedPagination: number;
+    public collectionSize: number;
 
     constructor(private pageService: PageService, private modal: ModalComponent, private fileService: FileService) {
         this.page = new Page;

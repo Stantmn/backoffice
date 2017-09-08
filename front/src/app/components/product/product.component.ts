@@ -20,11 +20,11 @@ export class ProductComponent implements OnInit {
     private result: any;
     private categoryList: {};
     private statusList: {};
-    private tableParams: any;
-    private advancedPagination: number;
-    private collectionSize: number;
+    public tableParams: any;
+    public advancedPagination: number;
+    public collectionSize: number;
     public fileList: Array<File>;
-    private showFormFlag: boolean;
+    public showFormFlag: boolean;
 
 
     constructor(

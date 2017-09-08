@@ -16,10 +16,10 @@ export class UserComponent implements OnInit {
     private errorMessage: any;
     private result: any;
     private roles: {};
-    private tableParams: any;
-    private advancedPagination: number;
-    private collectionSize: number;
-    private showFormFlag: boolean;
+    public tableParams: any;
+    public advancedPagination: number;
+    public collectionSize: number;
+    public showFormFlag: boolean;
 
 
     constructor(private userService: UserService, private modal: ModalComponent) {

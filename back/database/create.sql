@@ -51,6 +51,9 @@ create table attach
 	type smallint not null
 );
 
+create index attach_group_id_index
+	on attach (group_id);
+
 create table product
 (
 	id serial not null
@@ -62,6 +65,37 @@ create table product
 	cost numeric(8,2) not null,
 	status integer default 1 not null,
 	file_grp integer
-)
-;
+);
+
+create table "order"
+(
+	id serial not null
+		constraint orders_pkey
+		primary key,
+	customer_id integer not null
+		constraint order_customer_id_fk
+		references customer,
+	date timestamp default now(),
+	total numeric(10,2) not null,
+	delievery_type integer not null,
+	status integer default 0
+);
+
+create table item
+(
+	order_id integer not null
+		constraint item_order_id_fk
+		references "order",
+	product_id integer not null
+		constraint item_product_id_fk
+		references product,
+	customer_id integer not null
+		constraint item_customer_id_fk
+		references customer,
+	price numeric(8,2),
+	count integer default 1
+);
+
+create unique index item_order_id_product_id_user_id_uindex
+	on item (order_id, product_id, customer_id);
 

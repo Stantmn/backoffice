@@ -201,6 +201,15 @@ export class CustomerComponent implements OnInit {
         }
     }
 
+    checkPhone(phone: string): void {
+        let num: number = parseInt(phone);
+        if(isNaN(num)){
+            this.customer.phone = null;
+        }else{
+            this.customer.phone = num.toString();
+        }
+    }
+
     changePage(page: number): void {
         this.tableParams.page = page;
         this.getCustomers();

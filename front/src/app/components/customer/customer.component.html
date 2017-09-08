@@ -34,7 +34,8 @@
 
                     <fieldset class="form-group align-middle">
                         <label>Phone</label>
-                        <input class="form-control" [(ngModel)]="customer.phone" name="phone" placeholder="Enter a Phone">
+                        <input class="form-control" [(ngModel)]="customer.phone" name="phone"
+                               (keyup)="checkPhone(customer.phone)" placeholder="Enter a Phone">
                     </fieldset>
 
                     <fieldset class="form-group align-middle">

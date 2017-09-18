@@ -81,6 +81,7 @@ create table "order"
 	status integer default 0
 );
 
+
 create table item
 (
 	order_id integer not null

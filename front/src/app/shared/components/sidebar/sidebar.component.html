@@ -1,5 +1,8 @@
 <nav class="sidebar" [ngClass]="{sidebarPushRight: isActive}">
     <ul class="list-group">
+        <a [routerLink]="['/order']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-credit-card"></i>&nbsp;Orders
+        </a>
         <a [routerLink]="['/product']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-gift"></i>&nbsp;Products
         </a>

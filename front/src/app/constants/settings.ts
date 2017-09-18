@@ -21,4 +21,17 @@ export class Settings {
         {value: 2, name: "Operator"},
         {value: 3, name: "Read Only"}
     ];
+    public static ORDER_STATUS: {} = [
+        {value: 0, name: "Basket"},
+        {value: 1, name: "Paid"},
+        {value: 2, name: "Shipped"},
+        {value: 3, name: "Canceled"},
+    ];
+    public static DELIEVERY_TYPE: {} = [
+        {value: 0, name: "Undefined"},
+        {value: 1, name: "USPS"},
+        {value: 2, name: "International"},
+        {value: 3, name: "Express"},
+        {value: 3, name: "Get in a Store"},
+    ];
 }

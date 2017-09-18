@@ -1,40 +1,40 @@
-<app-page-header [heading]="'Products'" [icon]="'fa-table'"></app-page-header>
+<app-page-header [heading]="'Orders'" [icon]="'fa-table'"></app-page-header>
 <div class="row" *ngIf="showFormFlag">
     <div class="col col-xl-12 col-lg-12">
-        <form #productForm="ngForm">
+        <form #orderForm="ngForm">
             <div class="card mb-3">
                 <div class="card-header">
-                    {{product.id ? 'Edit' : 'Add'}} Products
+                    {{order.id ? 'Edit' : 'Add'}} Orders
                 </div>
                 <div class="col-md-12">
 
                     <fieldset class="form-group align-middle">
                         <label>Category</label>
-                        <select class="form-control" [(ngModel)]="product.category" name="category" required>
+                        <select class="form-control" [(ngModel)]="order.category" name="category" required>
                             <option *ngFor="let item of categoryList;" [ngValue]="item.value">{{ item.name }}</option>
                         </select>
                     </fieldset>
 
                     <fieldset class="form-group align-middle">
                         <label>Name</label>
-                        <input class="form-control" [(ngModel)]="product.name" name="name" id="name"
+                        <input class="form-control" [(ngModel)]="order.name" name="name" id="name"
                                placeholder="Enter a Name" minlength="2" required>
                     </fieldset>
 
                     <fieldset class="form-group">
                         <label>Description</label>
-                        <app-tinymce [(ngModel)]="product.description" name="description" required></app-tinymce>
+                        <app-tinymce [(ngModel)]="order.description" name="description" required></app-tinymce>
                     </fieldset>
 
                     <fieldset class="form-group align-middle">
                         <label>Cost</label>
-                        <input class="form-control" [(ngModel)]="product.cost" name="cost" id="cost"
+                        <input class="form-control" [(ngModel)]="order.cost" name="cost" id="cost"
                                placeholder="Enter a Cost" minlength="2" required>
                     </fieldset>
 
                     <fieldset class="form-group align-middle">
                         <label>Status</label>
-                        <select class="form-control" [(ngModel)]="product.status" name="status" required>
+                        <select class="form-control" [(ngModel)]="order.status" name="status" required>
                             <option *ngFor="let item of statusList;" [ngValue]="item.value">{{ item.name }}</option>
                         </select>
                     </fieldset>
@@ -47,7 +47,7 @@
                                        (change)="fileChangeEvent($event);fileInput.value = ''"
                                        placeholder="Upload file..." accept="image/x-png,image/gif,image/jpeg" multiple />
                                 <br>
-                                <li *ngFor="let file of product.files">
+                                <li *ngFor="let file of order.files">
                                      {{file}} <i style="cursor: pointer;" (click)="deleteFile(file)" class="fa fa-remove"></i>
                                 </li>
                             </div>
@@ -56,8 +56,8 @@
 
                     <div class="form-group align-middle">
                         <div class="col-md-8">
-                            <button class="btn btn-danger" (click)="productCancel()">Cancel</button>
-                            <button class="btn btn-success" (click)="productSave()" [disabled]="!productForm.form.valid">
+                            <button class="btn btn-danger" (click)="orderCancel()">Cancel</button>
+                            <button class="btn btn-success" (click)="orderSave()" [disabled]="!orderForm.form.valid">
                                 Save
                             </button>
                         </div>
@@ -71,53 +71,61 @@
 <div class="row">
     <div class="col col-xl-12 col-lg-12">
         <div class="card mb-3">
-            <div class="card-header">Products</div>
+            <div class="card-header">Orders</div>
             <div class="card-block table-responsive">
                 <button class="btn btn-success" (click)="setShowForm(!showFormFlag)">Add New</button>
                 <br><br>
                 <input class="form-control" [(ngModel)]="tableParams.search" name="search"
-                       placeholder="Enter a Name" (keyup)="searchFilter()" *ngIf="productList.length">
+                       placeholder="Enter a Name" (keyup)="searchFilter()" *ngIf="orderList.length">
                 <br>
-                <table class="table table-bordered" *ngIf="productList.length">
+                <table class="table table-bordered" *ngIf="orderList.length">
                     <thead class="thead-inverse">
                     <tr>
                         <th (click)="sortField(1)" style="cursor: pointer;">#</th>
-                        <th (click)="sortField(4)" style="cursor: pointer;">Category</th>
-                        <th (click)="sortField(2)" style="cursor: pointer;">Name</th>
-                        <th (click)="sortField(3)" style="cursor: pointer;">Cost</th>
-                        <th (click)="sortField(5)" style="cursor: pointer;">Status</th>
+                        <th (click)="sortField(2)" style="cursor: pointer;">Customer</th>
+                        <th (click)="sortField(3)" style="cursor: pointer;">Data</th>
+                        <th (click)="sortField(4)" style="cursor: pointer;">Total</th>
+                        <th (click)="sortField(5)" style="cursor: pointer;">Count</th>
+                        <th (click)="sortField(6)" style="cursor: pointer;">Delivery</th>
+                        <th (click)="sortField(7)" style="cursor: pointer;">Status</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr *ngFor="let product of productList; let i = index;">
-                        <td>{{product.id}}</td>
+                    <tr *ngFor="let order of orderList; let i = index;">
+                        <td>{{order.id}}</td>
                         <td>
-                            {{categoryList[product.category].name}}
+                            {{order.customerName}}
                         </td>
                         <td>
-                            {{product.name}}
+                            {{order.date}}
                         </td>
                         <td>
-                            {{product.cost}}
-                        </td>
-                        <td class="central">{{statusList[product.status].name}}</td>
-                        <td>
-                            <button class="btn btn-warning" (click)="editProduct(product.id)">Edit</button>
+                            {{order.total}}
                         </td>
                         <td>
-                            <button class="btn btn-danger" (click)="deleteProduct(product.id)">Delete</button>
+                            {{order.itemCount}}
+                        </td>
+                        <td>
+                            {{deliveryTypeList[order.deliveryType].name}}
+                        </td>
+                        <td class="central">{{statusList[order.status].name}}</td>
+                        <td>
+                            <button class="btn btn-warning" (click)="editOrder(order.id)">Edit</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger" (click)="deleteOrder(order.id)">Delete</button>
                         </td>
                     </tr>
                     </tbody>
                 </table>
                 <ngb-pagination [collectionSize]="collectionSize" [(page)]="advancedPagination" [maxSize]="5"
-                                [rotate]="true" *ngIf="productList.length" (pageChange)="changePage($event)"
+                                [rotate]="true" *ngIf="orderList.length" (pageChange)="changePage($event)"
                                 [ellipses]="false" [boundaryLinks]="true" [pageSize] = "tableParams.limit">
                 </ngb-pagination>
-                <div *ngIf="!productList.length">
-                    Products not found
+                <div *ngIf="!orderList.length">
+                    Orders not found
                 </div>
             </div>
         </div>

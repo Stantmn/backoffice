@@ -95,5 +95,5 @@ create table item
 );
 
 create unique index item_order_id_product_id_user_id_uindex
-	on item (order_id, product_id, customer_id);
+	on item (order_id, product_id;
 

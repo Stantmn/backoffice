@@ -29,46 +29,8 @@ export class OrderService {
             );
     }
 
-    getOrder(id: number): Observable<Order> {
-        return this.http.get(Settings.API_ENDPOINT + '/order/' + id)
-            .map((res) => {
-                let order: Order;
-                order = res.json().data;
-                return order;
-            })
-            .catch(
-                error => {
-                    return Observable.throw(error || 'Server Error');
-                }
-            );
-    }
-
-    deleteOrder(id: number) {
-        return this.http.delete(Settings.API_ENDPOINT + '/order/' + id)
-            .map((res) => {
-                return res.json();
-            })
-            .catch(
-                error => {
-                    return Observable.throw(error || 'Server Error');
-                }
-            );
-    }
-
-    addOrder(order: Order) {
-        return this.http.post(Settings.API_ENDPOINT + '/order/', order)
-            .map((res) => {
-                return res.json();
-            })
-            .catch(
-                error => {
-                    return Observable.throw(error || 'Server Error');
-                }
-            );
-    }
-
-    updateOrder(order: Order) {
-        return this.http.put(Settings.API_ENDPOINT + '/order/', order)
+    deleteOrder(orderId: number) {
+        return this.http.delete(Settings.API_ENDPOINT + '/order/' + orderId)
             .map((res) => {
                 return res.json();
             })

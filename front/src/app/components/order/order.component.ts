@@ -57,24 +57,11 @@ export class OrderComponent implements OnInit {
             );
     }
 
-    getOrder(id: number) {
-        return this.orderService.getOrder(id)
-            .subscribe(
-                response => {
-                    this.order = response;
-                },
-                error => {
-                    this.modal.openMessage('Server Error', 'Can\'t an order', 0);
-                    console.log(error);
-                }
-            );
-    }
-
-    deleteOrder(id: number): void {
+    deleteOrder(orderId: number): void {
         this.modal.openMessage('Delete Order', 'A you sure?', 1)
             .then(result => {
                 if (result) {
-                    this.orderService.deleteOrder(id)
+                    this.orderService.deleteOrder(orderId)
                         .subscribe(
                             response => {},
                             error => {
@@ -92,25 +79,7 @@ export class OrderComponent implements OnInit {
             });
     }
 
-    orderSave(): void {
-        if (this.order.id) {
-            this.orderService.updateOrder(this.order)
-                .subscribe(
-                    response => {
-                    },
-                    error => {
-                        this.modal.openMessage('Server Error', 'Can\'t update an orders', 0);
-                        console.log(error);
-                    },
-                    () => {
-                        this.getOrders();
-                    }
-                );
-        }
-    }
-
-    editOrder(id: number): void {
-        this.getOrder(id);
+    editOrder(orderId: number): void {
         this.showFormFlag = !this.showFormFlag;
         document.body.scrollTop = 0;
     }

@@ -9,26 +9,14 @@
                 <div class="col-md-12">
 
                     <fieldset class="form-group align-middle">
-                        <label>Category</label>
-                        <select class="form-control" [(ngModel)]="order.category" name="category" required>
-                            <option *ngFor="let item of categoryList;" [ngValue]="item.value">{{ item.name }}</option>
-                        </select>
-                    </fieldset>
-
-                    <fieldset class="form-group align-middle">
                         <label>Name</label>
                         <input class="form-control" [(ngModel)]="order.name" name="name" id="name"
                                placeholder="Enter a Name" minlength="2" required>
                     </fieldset>
 
-                    <fieldset class="form-group">
-                        <label>Description</label>
-                        <app-tinymce [(ngModel)]="order.description" name="description" required></app-tinymce>
-                    </fieldset>
-
                     <fieldset class="form-group align-middle">
                         <label>Cost</label>
-                        <input class="form-control" [(ngModel)]="order.cost" name="cost" id="cost"
+                        <input class="form-control" [(ngModel)]="order.total" name="cost" id="cost"
                                placeholder="Enter a Cost" minlength="2" required>
                     </fieldset>
 
@@ -39,24 +27,15 @@
                         </select>
                     </fieldset>
 
-                    <fieldset class="form-group">
-                        <label>Files</label>
-                        <div class="form-group align-middle">
-                            <div class="col-md-12">
-                                <input class="form-control" type="file" name="files[]" #fileInput
-                                       (change)="fileChangeEvent($event);fileInput.value = ''"
-                                       placeholder="Upload file..." accept="image/x-png,image/gif,image/jpeg" multiple />
-                                <br>
-                                <li *ngFor="let file of order.files">
-                                     {{file}} <i style="cursor: pointer;" (click)="deleteFile(file)" class="fa fa-remove"></i>
-                                </li>
-                            </div>
-                        </div>
+                    <fieldset class="form-group align-middle">
+                        <label>Delivery Type</label>
+                        <select class="form-control" [(ngModel)]="order.deliveryType" name="status" required>
+                            <option *ngFor="let item of deliveryTypeList;" [ngValue]="item.value">{{ item.name }}</option>
+                        </select>
                     </fieldset>
 
                     <div class="form-group align-middle">
                         <div class="col-md-8">
-                            <button class="btn btn-danger" (click)="orderCancel()">Cancel</button>
                             <button class="btn btn-success" (click)="orderSave()" [disabled]="!orderForm.form.valid">
                                 Save
                             </button>
@@ -73,7 +52,6 @@
         <div class="card mb-3">
             <div class="card-header">Orders</div>
             <div class="card-block table-responsive">
-                <button class="btn btn-success" (click)="setShowForm(!showFormFlag)">Add New</button>
                 <br><br>
                 <input class="form-control" [(ngModel)]="tableParams.search" name="search"
                        placeholder="Enter a Name" (keyup)="searchFilter()" *ngIf="orderList.length">
@@ -99,7 +77,7 @@
                             {{order.customerName}}
                         </td>
                         <td>
-                            {{order.date}}
+                            {{order.date | date: 'MM/dd/yyyy HH:mm:ss'}}
                         </td>
                         <td>
                             {{order.total}}

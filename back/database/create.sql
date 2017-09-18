@@ -86,13 +86,10 @@ create table item
 (
 	order_id integer not null
 		constraint item_order_id_fk
-		references "order",
+		references orders,
 	product_id integer not null
 		constraint item_product_id_fk
 		references product,
-	customer_id integer not null
-		constraint item_customer_id_fk
-		references customer,
 	price numeric(8,2),
 	count integer default 1
 );

@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const customer = require('./routes/customer');
 const product = require('./routes/product');
+const order = require('./routes/order');
 const user = require('./routes/user');
 const login = require('./routes/login');
 const fileList = require('./routes/file-list');
@@ -35,6 +36,7 @@ app.use(function (req, res, next) {
 app.use('/', user);
 app.use('/', customer);
 app.use('/', product);
+app.use('/', order);
 app.use('/', fileList);
 
 app.use('*', function (req, res) {

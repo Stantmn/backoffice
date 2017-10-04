@@ -76,7 +76,6 @@ create table "order"
 		constraint order_customer_id_fk
 		references customer,
 	date timestamp default now(),
-	total numeric(10,2) not null,
 	delievery_type integer not null,
 	status integer default 0
 );

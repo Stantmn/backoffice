@@ -79,9 +79,34 @@ export class OrderComponent implements OnInit {
             });
     }
 
+    orderSave(): void {
+        this.orderService.updateOrder(this.order)
+            .subscribe(
+                response => {
+                    this.showFormFlag = false;
+                    this.getOrders();
+                },
+                error => {
+                    this.modal.openMessage('Server Error', 'Can\'t save the order', 0);
+                    console.log(error);
+                }
+            );
+    }
+    
     editOrder(orderId: number): void {
         this.showFormFlag = !this.showFormFlag;
         document.body.scrollTop = 0;
+
+        this.orderService.getOrder(orderId)
+            .subscribe(
+                response => {
+                    this.order = response;
+                },
+                error => {
+                    this.modal.openMessage('Server Error', 'Can\'t get the order', 0);
+                    console.log(error);
+                }
+            );
     }
 
     setShowForm(flag: boolean): void {

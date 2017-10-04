@@ -9,15 +9,38 @@
                 <div class="col-md-12">
 
                     <fieldset class="form-group align-middle">
-                        <label>Name</label>
-                        <input class="form-control" [(ngModel)]="order.name" name="name" id="name"
-                               placeholder="Enter a Name" minlength="2" required>
+                        <label>Name: </label> {{order.customerName}}
                     </fieldset>
 
                     <fieldset class="form-group align-middle">
-                        <label>Cost</label>
-                        <input class="form-control" [(ngModel)]="order.total" name="cost" id="cost"
-                               placeholder="Enter a Cost" minlength="2" required>
+                        <label>Shipping Address: </label> {{order.shippingAddress}}
+                    </fieldset>
+
+                    <table class="table table-bordered">
+                        <thead class="thead-inverse">
+                        <tr>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Count</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let items of order.items;">
+                            <td>
+                                {{items.productName}}
+                            </td>
+                            <td>
+                                {{items.price}}
+                            </td>
+                            <td>
+                                {{items.count}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <fieldset class="form-group align-middle">
+                        <label>Total: </label> {{order.total}}
                     </fieldset>
 
                     <fieldset class="form-group align-middle">
@@ -29,7 +52,7 @@
 
                     <fieldset class="form-group align-middle">
                         <label>Delivery Type</label>
-                        <select class="form-control" [(ngModel)]="order.deliveryType" name="status" required>
+                        <select class="form-control" [(ngModel)]="order.deliveryType" name="deliveryType" required>
                             <option *ngFor="let item of deliveryTypeList;" [ngValue]="item.value">{{ item.name }}</option>
                         </select>
                     </fieldset>

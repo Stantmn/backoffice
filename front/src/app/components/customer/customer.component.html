@@ -119,7 +119,7 @@
                     <tr *ngFor="let customer of customerList; let i = index;">
                         <td>{{customer.id}}</td>
                         <td class="central">
-                            <a href="/vehicle/{{customer.id}}"> {{customer.firstName}} {{customer.lastName}}</a>
+                            {{customer.firstName}} {{customer.lastName}}
                         </td>
                         <td class="central">{{customer.email}}</td>
                         <td class="central">{{statusList[customer.status].name}}</td>

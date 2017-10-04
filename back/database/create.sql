@@ -67,7 +67,7 @@ create table product
 	file_grp integer
 );
 
-create table "order"
+create table orders
 (
 	id serial not null
 		constraint orders_pkey
@@ -94,5 +94,5 @@ create table item
 );
 
 create unique index item_order_id_product_id_user_id_uindex
-	on item (order_id, product_id;
+	on item (order_id, product_id);
 

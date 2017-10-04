@@ -51,15 +51,12 @@ create table attach
 	type smallint not null
 );
 
-create index attach_group_id_index
-	on attach (group_id);
-
 create table product
 (
 	id serial not null
 		constraint product_pkey
 		primary key,
-	category integer default 1 not null,
+	category integer default 1,
 	name varchar(250) not null,
 	description varchar(4000) not null,
 	cost numeric(8,2) not null,
@@ -76,10 +73,9 @@ create table orders
 		constraint order_customer_id_fk
 		references customer,
 	date timestamp default now(),
-	delievery_type integer not null,
+	delivery_type integer not null,
 	status integer default 0
 );
-
 
 create table item
 (
@@ -92,7 +88,4 @@ create table item
 	price numeric(8,2),
 	count integer default 1
 );
-
-create unique index item_order_id_product_id_user_id_uindex
-	on item (order_id, product_id);
 

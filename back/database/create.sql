@@ -89,4 +89,4 @@ create table item
 	count integer default 1
 );
 
-INSERT INTO public.users (email, first_name, last_name, password, role, salt, token, expired) VALUES ('admin@admin', 'admin', 'admin', '59e5a72ed92b3646f81c87643863dd116a14fc5e7b8bed2953b98f05c30aab690629bdee36f3e3a5831e4be6f46aa72ff9d18d86b3e2c4e7537a5a42935467aa', 1, '9e0fccd4a8953dd6', '3e87660980537a32699e36d8a6248a90ebbc34dea8a5619904a63bce84c6586ce06be910d26e4145d7921f96369866403f2ab51d505564c3dd4110c7fbfb658b', '2017-10-03 20:29:15.725215');
+INSERT INTO users (email, first_name, last_name, password, role, salt, token, expired) VALUES ('admin@admin', 'admin', 'admin', '59e5a72ed92b3646f81c87643863dd116a14fc5e7b8bed2953b98f05c30aab690629bdee36f3e3a5831e4be6f46aa72ff9d18d86b3e2c4e7537a5a42935467aa', 1, '9e0fccd4a8953dd6', '3e87660980537a32699e36d8a6248a90ebbc34dea8a5619904a63bce84c6586ce06be910d26e4145d7921f96369866403f2ab51d505564c3dd4110c7fbfb658b', '2017-10-03 20:29:15.725215');

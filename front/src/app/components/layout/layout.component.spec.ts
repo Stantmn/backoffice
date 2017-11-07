@@ -1,11 +1,11 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {RouterTestingModule} from '@angular/router/testing';
+import {NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap';
 import {HttpModule, Http} from '@angular/http';
 import {HttpService} from "../../services/http.service";
 
-import { HeaderComponent, SidebarComponent } from '../../shared';
-import { LayoutComponent } from './layout.component';
+import {HeaderComponent, SidebarComponent} from '../../shared';
+import {LayoutComponent} from './layout.component';
 
 describe('LayoutComponent', () => {
     let component: LayoutComponent;

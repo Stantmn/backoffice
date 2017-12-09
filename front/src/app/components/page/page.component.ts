@@ -145,9 +145,9 @@ export class PageComponent implements OnInit {
             }
         }
 
-        formData.append('type', 1);
+        formData.append('type', '1');
         if (this.page.fileGrp) {
-            formData.append('fileGrp', this.page.fileGrp);
+            formData.append('fileGrp', this.page.fileGrp.toString());
         }
         this.fileService.uploadFiles(formData)
             .subscribe(

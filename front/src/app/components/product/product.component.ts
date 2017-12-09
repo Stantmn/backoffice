@@ -157,9 +157,9 @@ export class ProductComponent implements OnInit {
             }
         }
 
-        formData.append('type', 1);
+        formData.append('type', '1');
         if (this.product.fileGrp) {
-            formData.append('fileGrp', this.product.fileGrp);
+            formData.append('fileGrp', this.product.fileGrp.toString());
         }
         this.fileService.uploadFiles(formData)
             .subscribe(

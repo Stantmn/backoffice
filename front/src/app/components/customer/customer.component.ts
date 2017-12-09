@@ -150,9 +150,9 @@ export class CustomerComponent implements OnInit {
             }
         }
 
-        formData.append('type', 1);
+        formData.append('type', '1');
         if (this.customer.fileGrp) {
-            formData.append('fileGrp', this.customer.fileGrp);
+            formData.append('fileGrp', this.customer.fileGrp.toString());
         }
         this.fileService.uploadFiles(formData)
             .subscribe(
